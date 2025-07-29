@@ -24,9 +24,25 @@ let pgPool = null;
 // Initialize PostgreSQL pool
 const getPgPool = () => {
   if (!pgPool) {
+    // Parse the POSTGRES_URL to determine SSL configuration
+    const postgresUrl = process.env.POSTGRES_URL;
+    let sslConfig = false;
+    
+    // Check if URL explicitly requires SSL or if we're in a cloud environment
+    if (postgresUrl && (postgresUrl.includes('sslmode=require') || postgresUrl.includes('amazonaws.com') || postgresUrl.includes('azure.com'))) {
+      sslConfig = { rejectUnauthorized: false };
+    } else if (process.env.POSTGRES_SSL === 'true') {
+      sslConfig = { rejectUnauthorized: false };
+    } else if (process.env.POSTGRES_SSL === 'require') {
+      sslConfig = { rejectUnauthorized: true };
+    }
+    // Default: no SSL (handles local databases and servers that don't support SSL)
+    
+    console.log(`🔌 PostgreSQL SSL Config: ${sslConfig ? 'Enabled (rejectUnauthorized: ' + !sslConfig.rejectUnauthorized + ')' : 'Disabled'}`);
+    
     pgPool = new Pool({
-      connectionString: process.env.POSTGRES_URL,
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+      connectionString: postgresUrl,
+      ssl: sslConfig,
     });
     console.log('✅ PostgreSQL pool initialized');
   }
