@@ -409,10 +409,15 @@ async function sendLoadingAnimation(userId, appToken) {
     });
     console.log('✅ Loading animation sent successfully');
   } catch (error) {
-    if (error.response && error.response.status === 404) {
-      console.log('⚠️  Loading animation flow not found (404) - skipping animation');
-      console.log('   This is normal if the flow "content20250711193804_599717" doesn\'t exist in ManyChat');
-      // Skip gracefully - this is not a critical error
+    if (error.response && (error.response.status === 404 || error.response.status === 400)) {
+      if (error.response.status === 404) {
+        console.log('⚠️  Loading animation flow not found (404) - skipping animation');
+        console.log('   This is normal if the flow "content20250711193804_599717" doesn\'t exist in ManyChat');
+      } else if (error.response.status === 400) {
+        console.log('⚠️  Loading animation request invalid (400) - skipping animation');
+        console.log('   This could be due to invalid flow ID or request format - continuing workflow');
+      }
+      // Skip gracefully - these are not critical errors
       return;
     } else {
       console.error('❌ Failed to send loading animation:', {
