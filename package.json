@@ -10,20 +10,21 @@
     "setup": "node setup.js"
   },
   "dependencies": {
+    "@langchain/community": "^0.0.25",
+    "@langchain/core": "^0.1.30",
+    "@langchain/openai": "^0.0.14",
+    "@langchain/qdrant": "^0.0.5",
+    "@qdrant/js-client-rest": "^1.9.0",
+    "axios": "^1.6.7",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "helmet": "^7.1.0",
+    "langchain": "^0.1.25",
     "node-fetch": "^3.3.2",
     "openai": "^4.20.1",
-    "redis": "^4.6.8",
-    "langchain": "^0.1.25",
-    "@langchain/openai": "^0.0.14",
-    "@langchain/community": "^0.0.25",
-    "@langchain/core": "^0.1.30",
-    "@langchain/qdrant": "^0.0.5",
-    "@qdrant/js-client-rest": "^1.9.0",
-    "axios": "^1.6.7"
+    "pg": "^8.16.3",
+    "redis": "^4.6.8"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"

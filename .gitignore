@@ -150,4 +150,9 @@ test-qdrant.js
 verify-collection.js
 
 # Optional: Session logs (if you don't want to track them)
-# SESSION_LOG.md 
+SESSION_LOG.md
+
+# Development and testing files
+samplewebhook.json
+test command.md
+n8nworkflow1.json 
